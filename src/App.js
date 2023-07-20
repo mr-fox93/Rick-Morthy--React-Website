@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import CharactersCard from "./componets/CharactersCard";
 import styled from "styled-components";
+import Navbar from "./componets/Navbar";
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,10 +67,7 @@ function App() {
 
   return (
     <>
-      <Wrapper>
-        {characters.map((character) => (
-          <CharactersCard key={character.id} character={character} />
-        ))}
+      <div>
         <button disabled={isLoading || page >= 42} onClick={handleNextPage}>
           Next
         </button>
@@ -81,6 +79,11 @@ function App() {
           onChange={(e) => setInputPage(e.target.value)}
         />
         <button onClick={handleGoToPage}>Go to</button>
+      </div>
+      <Wrapper>
+        {characters.map((character) => (
+          <CharactersCard key={character.id} character={character} />
+        ))}
       </Wrapper>
     </>
   );
