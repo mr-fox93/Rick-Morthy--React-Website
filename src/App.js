@@ -23,6 +23,7 @@ const fetchCharacters = async (page, search) => {
   );
   const characters = res.data.results.map((character) => {
     return {
+      page: res.data.info.pages,
       id: character.id ? character.id : "No data",
       name: character.name ? character.name : "No data",
       status: character.status ? character.status : "No data",
@@ -60,6 +61,12 @@ function App() {
     setInputPage(value);
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+    setInputPage(1);
+  };
+
   return (
     <>
       <Box
@@ -72,7 +79,7 @@ function App() {
       >
         <TextField
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearch}
           variant="outlined"
           size="small"
           label="Search character"
@@ -81,7 +88,7 @@ function App() {
           }}
         />{" "}
         <Pagination
-          count={42}
+          count={characters[0] ? characters[0].page : 1}
           variant="outlined"
           shape="rounded"
           size="large"
