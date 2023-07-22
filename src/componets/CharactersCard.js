@@ -4,11 +4,12 @@ import { statusColor } from "../statusColor";
 
 const Card = styled.div`
   width: 360px;
-  height: 520px;
+  height: 530px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   transition: all 0.3s ease;
   overflow: auto;
+  background-color: #f6f5f3;
 
   &:hover {
     transform: scale(1.05);

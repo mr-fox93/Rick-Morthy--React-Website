@@ -17,9 +17,9 @@ const Wrapper = styled.div`
   gap: 60px;
 `;
 
-const fetchCharacters = async (page) => {
+const fetchCharacters = async (page, search) => {
   const res = await axios.get(
-    `https://rickandmortyapi.com/api/character/?page=${page}`
+    `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`
   );
   const characters = res.data.results.map((character) => {
     return {
@@ -39,10 +39,11 @@ const fetchCharacters = async (page) => {
 function App() {
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(page);
+  const [search, setSearch] = useState("");
 
   const { data, isLoading } = useQuery(
-    ["characters", page],
-    () => fetchCharacters(page),
+    ["characters", page, search],
+    () => fetchCharacters(page, search),
     {
       keepPreviousData: true,
     }
@@ -69,6 +70,16 @@ function App() {
         marginBottom="25px"
         gap="10px"
       >
+        <TextField
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          variant="outlined"
+          size="small"
+          label="Search character"
+          sx={{
+            width: "200px",
+          }}
+        />{" "}
         <Pagination
           count={42}
           variant="outlined"
@@ -83,6 +94,9 @@ function App() {
           onChange={(e) => setInputPage(e.target.value)}
           variant="outlined"
           size="small"
+          sx={{
+            width: "45px",
+          }}
         />
         <Button onClick={handleGoToPage} variant="outlined" size="large">
           Go to
