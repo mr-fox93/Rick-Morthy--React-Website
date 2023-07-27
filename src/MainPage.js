@@ -8,6 +8,10 @@ import Pagination from "@mui/material/Pagination";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,9 +21,9 @@ const Wrapper = styled.div`
   gap: 60px;
 `;
 
-const fetchCharacters = async (page, search) => {
+const fetchCharacters = async (page, search, status) => {
   const res = await axios.get(
-    `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`
+    `https://rickandmortyapi.com/api/character/?page=${page}&name=${search}&status=${status}`
   );
   const characters = res.data.results.map((character) => {
     return {
@@ -41,10 +45,11 @@ function MainPage() {
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(page);
   const [search, setSearch] = useState("");
+  const [status, setStatus] = useState(" ");
 
   const { data, isLoading } = useQuery(
-    ["characters", page, search],
-    () => fetchCharacters(page, search),
+    ["characters", page, search, status],
+    () => fetchCharacters(page, search, status),
     {
       keepPreviousData: true,
     }
@@ -73,6 +78,10 @@ function MainPage() {
     setInputPage(1);
   };
 
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
+
   return (
     <>
       <Box
@@ -83,12 +92,28 @@ function MainPage() {
         marginBottom="25px"
         gap="10px"
       >
+        <FormControl variant="outlined" size="small">
+          <InputLabel>Status</InputLabel>
+          <Select
+            label="Select"
+            value={status}
+            onChange={handleStatusChange}
+            sx={{
+              width: "120px",
+            }}
+          >
+            <MenuItem value=" ">All</MenuItem>
+            <MenuItem value="alive">Alive</MenuItem>
+            <MenuItem value="dead">Dead</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           value={search}
           onChange={handleSearch}
           variant="outlined"
           size="small"
           label="Search character"
+          placeholder="name ..."
           sx={{
             width: "200px",
           }}
