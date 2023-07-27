@@ -9,7 +9,7 @@ const Card = styled.div`
   border-radius: 6px;
   transition: all 0.3s ease;
   overflow: auto;
-  background-color: #f6f5f3;
+  background-color: #f0ffff;
 
   &:hover {
     transform: scale(1.05);

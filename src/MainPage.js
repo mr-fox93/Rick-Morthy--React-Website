@@ -38,7 +38,7 @@ const fetchCharacters = async (page, search, status) => {
       image: character.image ? character.image : "No data",
     };
   });
-  return characters;
+  return { characters, totalPages: res.data.info.pages };
 };
 
 function MainPage() {
@@ -55,10 +55,11 @@ function MainPage() {
     }
   );
 
-  const characters = data ? data : [];
+  const characters = data ? data.characters : [];
+  const totalPages = data ? data.totalPages : 1;
 
   const handleGoToPage = () => {
-    if (inputPage >= 43) {
+    if (inputPage > totalPages) {
       alert("Page not egsist");
       setPage(Number(1));
       setInputPage(Number(1));
@@ -80,6 +81,8 @@ function MainPage() {
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value);
+    setPage(1);
+    setInputPage(1);
   };
 
   return (
@@ -119,7 +122,7 @@ function MainPage() {
           }}
         />{" "}
         <Pagination
-          count={characters[0] ? characters[0].page : 1}
+          count={totalPages}
           variant="outlined"
           shape="rounded"
           size="large"
@@ -137,7 +140,12 @@ function MainPage() {
             width: "135px",
           }}
         />
-        <Button onClick={handleGoToPage} variant="outlined" size="large">
+        <Button
+          onClick={handleGoToPage}
+          variant="outlined"
+          size="large"
+          icon="hearth"
+        >
           Go to
         </Button>
       </Box>
