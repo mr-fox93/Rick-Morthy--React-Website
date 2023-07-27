@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+//import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 function Navbar() {
@@ -12,9 +12,13 @@ function Navbar() {
       <CssBaseline />
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RickMorthy
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              style={{ width: "150px", height: "60px" }}
+            />
+          </Box>
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button component={RouterLink} to="/" color="inherit">

@@ -4,7 +4,7 @@ import { statusColor } from "../statusColor";
 
 const Card = styled.div`
   width: 360px;
-  height: 530px;
+  height: 570px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   transition: all 0.3s ease;
@@ -46,12 +46,12 @@ const Header = styled.div`
 const Status = styled.div`
   background-color: ${({ status }) => statusColor(status)};
   width: 70px;
-  height: 15px;
+  height: 20px;
   border-radius: 6px;
   display: flex;
   text-align: center;
   justify-content: center;
-  padding: 0.2rem;
+  padding: 0.3rem;
   color: white;
   font-weight: bold;
 `;
