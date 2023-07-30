@@ -1,6 +1,9 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useContext } from "react";
 import { statusColor } from "../statusColor";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { GlobalContext } from "../context/globalcontext";
 
 const Card = styled.div`
   width: 360px;
@@ -57,35 +60,50 @@ const Status = styled.div`
 `;
 
 const CharactersCard = ({ character }) => {
+  const { favorite, setFavorite, isFavorite, setIsFavorite } =
+    useContext(GlobalContext);
   return (
-    <>
-      <Card>
-        <Image src={character.image} alt={character.name} />
-        <Info>
-          <Header>
+    <Card>
+      <Image src={character.image} alt={character.name} />
+      <Info>
+        <Header>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <h1>{character.name}</h1>
-            <Status status={character.status}>{character.status}</Status>
-          </Header>
+            <IconButton
+              onClick={() => {
+                setFavorite([...favorite, character]);
+              }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          </div>
+          <Status status={character.status}>{character.status}</Status>
+        </Header>
 
-          <InfoGroup>
-            <p>
-              <b>Location:</b> {character.location}
-            </p>
-            <p>
-              <b>Gender:</b> {character.gender}
-            </p>
-          </InfoGroup>
-          <InfoGroup>
-            <p>
-              <b>Origin:</b> {character.origin}
-            </p>
-            <p>
-              <b>Species:</b> {character.species}
-            </p>
-          </InfoGroup>
-        </Info>
-      </Card>
-    </>
+        <InfoGroup>
+          <p>
+            <b>Location:</b> {character.location}
+          </p>
+          <p>
+            <b>Gender:</b> {character.gender}
+          </p>
+        </InfoGroup>
+        <InfoGroup>
+          <p>
+            <b>Origin:</b> {character.origin}
+          </p>
+          <p>
+            <b>Species:</b> {character.species}
+          </p>
+        </InfoGroup>
+      </Info>
+    </Card>
   );
 };
 
