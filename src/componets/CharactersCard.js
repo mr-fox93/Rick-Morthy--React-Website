@@ -61,7 +61,7 @@ const Status = styled.div`
 
 const CharactersCard = ({ character }) => {
   const { favorite, setFavorite } = useContext(GlobalContext);
-
+  /*
   const favoriteButton = (character) => {
     const newFavorite = character;
     if (!favorite.some((item) => item.id === character.id)) {
@@ -73,7 +73,17 @@ const CharactersCard = ({ character }) => {
   };
 
   const ifExist = favorite.some((item) => item.id === character.id);
+*/
 
+  const isFavorite = favorite.some((item) => item.id === character.id);
+
+  const favoriteButton = () => {
+    if (isFavorite) {
+      setFavorite(favorite.filter((item) => item.id !== character.id));
+    } else {
+      setFavorite([...favorite, character]);
+    }
+  };
   return (
     <Card>
       <Image src={character.image} alt={character.name} />
@@ -88,7 +98,7 @@ const CharactersCard = ({ character }) => {
           >
             <h1>{character.name}</h1>
             <IconButton
-              style={{ color: ifExist ? "red" : "grey" }}
+              style={{ color: isFavorite ? "red" : "grey" }}
               onClick={() => {
                 favoriteButton(character);
               }}

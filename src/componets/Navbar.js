@@ -27,9 +27,6 @@ function Navbar() {
             <Button component={RouterLink} to="/favorite" color="inherit">
               Favorite
             </Button>
-            <Button component={RouterLink} to="/fight" color="inherit">
-              Fight Arena
-            </Button>
           </Box>
         </Toolbar>
       </AppBar>
