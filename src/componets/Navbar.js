@@ -1,30 +1,34 @@
-import { Link as RouterLink } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-//import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import { Menu } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
 function Navbar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <CssBaseline />
-      <AppBar position="sticky">
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>Rick&Morty Wiki</Box>
+    <Menu inverted color="blue" style={{ borderRadius: 0 }}>
+      <Menu.Item
+        as={Link}
+        to="/"
+        header
+        style={{ fontSize: "1.2em", fontWeight: "bold" }}
+      >
+        Rick&Morty Wiki
+      </Menu.Item>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button component={RouterLink} to="/" color="inherit">
-              Home
-            </Button>
-            <Button component={RouterLink} to="/favorite" color="inherit">
-              Favorite
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+      <Menu.Menu position="right">
+        <Menu.Item
+          as={Link}
+          to="/"
+          name="Home"
+          style={{ fontWeight: "bold" }}
+        />
+        <Menu.Item
+          as={Link}
+          to="/favorite"
+          name="Favorite"
+          style={{ fontWeight: "bold" }}
+        />
+      </Menu.Menu>
+    </Menu>
   );
 }
 

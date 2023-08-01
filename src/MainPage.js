@@ -4,14 +4,10 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import CharactersCard from "./componets/CharactersCard";
 import styled from "styled-components";
-import Pagination from "@mui/material/Pagination";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
+import { Pagination } from "semantic-ui-react";
+import { Input, Select, Button } from "semantic-ui-react";
+
+import "semantic-ui-css/semantic.min.css";
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,6 +37,12 @@ const fetchCharacters = async (page, search, status) => {
   return { characters, totalPages: res.data.info.pages };
 };
 
+const statusOptions = [
+  { key: "a", text: "All", value: " " },
+  { key: "b", text: "Alive", value: "alive" },
+  { key: "c", text: "Dead", value: "dead" },
+];
+
 function MainPage() {
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(page);
@@ -60,7 +62,7 @@ function MainPage() {
 
   const handleGoToPage = () => {
     if (inputPage > totalPages) {
-      alert("Page not egsist");
+      alert("Page not exist");
       setPage(Number(1));
       setInputPage(Number(1));
     } else {
@@ -68,87 +70,62 @@ function MainPage() {
     }
   };
 
-  const handlePageChange = (_, value) => {
-    setPage(value);
-    setInputPage(value);
+  const handlePageChange = (_, { activePage }) => {
+    setPage(activePage);
+    setInputPage(activePage);
   };
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+  const handleSearch = (_, { value }) => {
+    setSearch(value);
     setPage(1);
     setInputPage(1);
   };
 
-  const handleStatusChange = (e) => {
-    setStatus(e.target.value);
+  const handleStatusChange = (_, { value }) => {
+    setStatus(value);
     setPage(1);
     setInputPage(1);
   };
 
   return (
     <>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        marginTop="25px"
-        marginBottom="25px"
-        gap="10px"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "25px",
+          marginBottom: "25px",
+          gap: "10px",
+        }}
       >
-        <FormControl variant="outlined" size="small">
-          <InputLabel>Status</InputLabel>
-          <Select
-            label="Select"
-            value={status}
-            onChange={handleStatusChange}
-            sx={{
-              width: "120px",
-            }}
-          >
-            <MenuItem value=" ">All</MenuItem>
-            <MenuItem value="alive">Alive</MenuItem>
-            <MenuItem value="dead">Dead</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
+        <Select
+          placeholder="Select status"
+          options={statusOptions}
+          value={status}
+          onChange={handleStatusChange}
+        />
+        <Input
           value={search}
           onChange={handleSearch}
-          variant="outlined"
-          size="small"
-          label="Search character"
-          placeholder="name ..."
-          sx={{
-            width: "200px",
-          }}
-        />{" "}
+          placeholder="Search character..."
+          icon="search"
+        />
         <Pagination
-          count={totalPages}
-          variant="outlined"
-          shape="rounded"
-          size="large"
-          page={page}
-          onChange={handlePageChange}
+          activePage={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
           disabled={isLoading}
         />
-        <TextField
+        <Input
           value={inputPage}
-          onChange={(e) => setInputPage(e.target.value)}
-          variant="outlined"
-          size="small"
-          label="Page number"
-          sx={{
-            width: "135px",
-          }}
+          onChange={(e, { value }) => setInputPage(value)}
+          placeholder="Page number"
         />
-        <Button
-          onClick={handleGoToPage}
-          variant="outlined"
-          size="large"
-          icon="hearth"
-        >
+        <Button color="blue" onClick={handleGoToPage}>
           Go to
         </Button>
-      </Box>
+      </div>
       <Wrapper>
         {characters.map((character) => (
           <CharactersCard key={character.id} character={character} />
