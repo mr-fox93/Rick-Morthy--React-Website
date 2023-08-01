@@ -12,13 +12,7 @@ function Navbar() {
       <CssBaseline />
       <AppBar position="sticky">
         <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <img
-              src="/logo.png"
-              alt="Logo"
-              style={{ width: "150px", height: "60px" }}
-            />
-          </Box>
+          <Box sx={{ flexGrow: 1 }}>Rick&Morty Wiki</Box>
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button component={RouterLink} to="/" color="inherit">
