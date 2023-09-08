@@ -116,11 +116,11 @@ function MainPage() {
           onChange={handleStatusChange}
         />
         <Input
+          className="custom-input"
           value={search}
           onChange={handleSearch}
           placeholder="Search character..."
           icon="search"
-          fontSize="17px"
         />
         <Pagination
           activePage={page}
@@ -128,14 +128,15 @@ function MainPage() {
           onPageChange={handlePageChange}
           disabled={isLoading}
           boundaryRange={isMobile ? 0 : 1}
-          siblingRange={isMobile ? 1 : 2}
+          siblingRange={isMobile ? 0 : 2}
           ellipsisItem={
             isMobile ? { content: "...", disabled: true } : undefined
           }
-          width={isMobile ? "80%" : undefined}
+          width={isMobile ? "70%" : undefined}
         />
 
         <Input
+          className="custom-input"
           value={inputPage}
           onChange={(e, { value }) => setInputPage(value)}
           placeholder="Page number"
