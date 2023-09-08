@@ -4,9 +4,11 @@ import { statusColor } from "../statusColor";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { GlobalContext } from "../context/globalcontext";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const Card = styled.div`
-  width: 360px;
+  width: ${({ isMobile }) => (isMobile ? "90%" : "360px")};
   height: 570px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
@@ -61,19 +63,9 @@ const Status = styled.div`
 
 const CharactersCard = ({ character }) => {
   const { favorite, setFavorite } = useContext(GlobalContext);
-  /*
-  const favoriteButton = (character) => {
-    const newFavorite = character;
-    if (!favorite.some((item) => item.id === character.id)) {
-      setFavorite([...favorite, newFavorite]);
-    } else if (favorite.some((item) => item.id === character.id)) {
-      const newFavorite = favorite.filter((item) => item.id !== character.id);
-      setFavorite(newFavorite);
-    }
-  };
 
-  const ifExist = favorite.some((item) => item.id === character.id);
-*/
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isFavorite = favorite.some((item) => item.id === character.id);
 
@@ -85,7 +77,7 @@ const CharactersCard = ({ character }) => {
     }
   };
   return (
-    <Card>
+    <Card isMobile={isMobile}>
       <Image src={character.image} alt={character.name} />
       <Info>
         <Header>
